@@ -9,10 +9,10 @@ import (
 	"strings"
 )
 
-func html_parser(str string){
+func html_parser(str string) {
 	// Request the HTML page.
 	res, err := http.Get(str)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 	defer res.Body.Close()
@@ -26,7 +26,7 @@ func html_parser(str string){
 	}
 	// show the HTML code as a string %s
 	fmt.Printf("%s\n", html)
-	
+
 	pageContent := string(html)
 	pageTitle := getTitle(pageContent)
 
@@ -37,10 +37,9 @@ func html_parser(str string){
 	htmlVersion := getHtmlVersion(pageContent)
 	fmt.Println(htmlVersion)
 
-
 }
 
-func getTitle(pageContent string) []byte{
+func getTitle(pageContent string) []byte {
 	// Find a title
 	titleStartIndex := strings.Index(pageContent, "<title>")
 	if titleStartIndex == -1 {
@@ -70,7 +69,7 @@ func getTitle(pageContent string) []byte{
 
 }
 
-func getHtmlVersion(pageContent string) string{
+func getHtmlVersion(pageContent string) string {
 	doctTypeMap := make(map[string]string)
 
 	//Html Versions Declaration
@@ -79,8 +78,8 @@ func getHtmlVersion(pageContent string) string{
 	doctTypeMap["HTML4.01-Transitional"] = "<!doctype html public \"-//w3c//dtd html 4.01 transitional//en\">"
 	doctTypeMap["HTML4.01-Frameset"] = "<!doctype html public \"-//w3c//dtd html  4.01 frameset//en\">"
 
-	for key,value := range doctTypeMap{
-		if strings.Contains(strings.ToLower(pageContent), value){
+	for key, value := range doctTypeMap {
+		if strings.Contains(strings.ToLower(pageContent), value) {
 			return key
 		}
 	}
